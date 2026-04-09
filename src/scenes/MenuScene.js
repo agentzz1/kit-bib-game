@@ -69,12 +69,9 @@ export class MenuScene extends Phaser.Scene {
 
     createMainMenu() {
         this.cameras.main.setBackgroundColor('#000000');
+        this.cameras.main.fadeIn(500, 0, 0, 0);
         this.menuState = 'main';
-        this.createTitle();
-        this.createMainMenuOptions();
-    }
-
-    createTitle() {
+        
         this.titleText = this.add.text(640, 120, 'FIVE NIGHTS', {
             fontSize: '52px', fill: '#00ff00', fontFamily: 'Courier New', fontStyle: 'bold'
         }).setOrigin(0.5);
@@ -83,33 +80,21 @@ export class MenuScene extends Phaser.Scene {
             fontSize: '72px', fill: '#ff0000', fontFamily: 'Courier New', fontStyle: 'bold'
         }).setOrigin(0.5);
 
-        this.titleGlowEvent = this.time.addEvent({
-            delay: 100,
-            callback: () => {
-                const flicker = Math.random();
-                if (flicker > 0.95) {
-                    this.titleText.setFontSize(52 + Math.random() * 10);
-                    this.subtitleText.setFontSize(72 + Math.random() * 15);
-                    this.titleText.setAlpha(0.8 + Math.random() * 0.2);
-                } else {
-                    this.titleText.setFontSize(52);
-                    this.subtitleText.setFontSize(72);
-                    this.titleText.setAlpha(1);
-                }
-            },
-            loop: true
+        this.startText = this.add.text(640, 350, '[ KLICKE UM ZU STARTEN ]', {
+            fontSize: '28px', fill: '#00ff00', fontFamily: 'Courier New'
+        }).setOrigin(0.5);
+
+        this.tweens.add({
+            targets: this.startText,
+            alpha: 0.3,
+            duration: 800,
+            yoyo: true,
+            repeat: -1
         });
 
-        this.time.addEvent({
-            delay: 2000,
-            callback: () => {
-                if (this.titleGlowEvent) {
-                    this.titleText.setFontSize(52);
-                    this.subtitleText.setFontSize(72);
-                    this.titleText.setAlpha(1);
-                }
-            },
-            loop: true
+        this.input.on('pointerdown', () => {
+            this.scene.start('OfficeScene');
+            this.scene.launch('UIScene');
         });
     }
 
@@ -149,12 +134,13 @@ export class MenuScene extends Phaser.Scene {
 
     updateMenuSelection() {
         this.menuItems.forEach((item, index) => {
+            const originalText = item.getData('text');
             if (index === this.selectedIndex) {
                 item.setFill('#ffff00');
-                item.setText('► ' + item.getData('text').replace('► ', '').replace('  ', ''));
+                item.setText('► ' + originalText.replace('► ', '').replace(/^  /, ''));
             } else {
                 item.setFill('#00ff00');
-                item.setText(item.getData('text'));
+                item.setText(originalText);
             }
         });
     }
