@@ -28,8 +28,6 @@ export class CoffeeSystem {
         GlobalState.coffeeLevel += this.drinkAmount;
         this.drinkCooldown = true;
 
-        this.scene.sound.play('coffee_sip', { volume: 0.3 });
-
         this.scene.time.delayedCall(2000, () => {
             this.drinkCooldown = false;
             this.scene.events.emit('coffeeCooldownReady');

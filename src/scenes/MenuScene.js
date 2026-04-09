@@ -69,10 +69,9 @@ export class MenuScene extends Phaser.Scene {
 
     createMainMenu() {
         this.cameras.main.setBackgroundColor('#000000');
-        this.scene.restart();
+        this.menuState = 'main';
         this.createTitle();
         this.createMainMenuOptions();
-        this.createSound();
     }
 
     createTitle() {
