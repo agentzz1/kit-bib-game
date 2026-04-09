@@ -21,13 +21,13 @@ export class MenuScene extends Phaser.Scene {
             "...",
             "Es war einmal...",
             "Ein Student der Informatik...",
-            "Seine Bachelorarbeit: 'KI-gestützte Bewässerungsoptimierung'...",
+            "Seine Bachelorarbeit: 'KI-gestuetzte Bewaesserungsoptimierung'...",
             "Aber etwas ist schief gelaufen...",
             "Die Bibliothek hat ihn verschluckt...",
-            "JETZT musst du überleben...",
-            "6 Nächte. 6 Prüfungen.",
+            "JETZT musst du ueberleben...",
+            "6 Naechte. 6 Pruefungen.",
             "Werde fertig mit deiner Arbeit...",
-            "...oder bleib für immer hier."
+            "...oder bleib fuer immer hier."
         ];
 
         this.loreIndex = 0;
@@ -359,20 +359,20 @@ export class MenuScene extends Phaser.Scene {
             "Es war einmal ein Student...",
             "Er studierte Informatik an KIT.",
             "Seine Bachelorarbeit:",
-            "'KI-gestützte Bewässerungsoptimierung'",
+            "'KI-gestuetzte Bewaesserungsoptimierung'",
             "",
             "Aber in der Nacht vor der Abgabe...",
             "etwas ging schief.",
             "",
             "Die Bibliothek hat ihn verschluckt.",
-            "Jetzt ist er gefangen..."",
+            "Jetzt ist er gefangen...",
             "zwischen den Regalen...",
-            "zwischen den Büchern...",
+            "zwischen den Buechern...",
             "",
             "Werde fertig mit deiner Arbeit...",
-            "...oder bleib für immer hier.",
+            "...oder bleib fuer immer hier.",
             "",
-            "Überlebe die 6 Nächte.",
+            "Ueberlebe die 6 Naechte.",
             "Dann bist du frei."
         ];
 
