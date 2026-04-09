@@ -44,20 +44,9 @@ export class AudioManager {
     }
 
     preload() {
-        Object.values(this.config).forEach(audio => {
-            this.scene.load.audio(audio.key, audio.path);
-        });
     }
 
     create() {
-        Object.values(this.config).forEach(audio => {
-            const sound = this.scene.sound.add(audio.key, {
-                volume: audio.volume,
-                loop: audio.loop || false
-            });
-            this.sounds[audio.key] = sound;
-        });
-        
         this.initWebAudio();
         this.setupEventListeners();
     }

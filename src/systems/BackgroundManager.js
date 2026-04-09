@@ -1,52 +1,12 @@
 export const BACKGROUND_CONFIG = {
-    'bib_aussen': {
-        key: 'bib_aussen',
-        path: 'assets/backgrounds/bib_aussen.png',
-        width: 1280,
-        height: 720
-    },
-    'suedlesesaal': {
-        key: 'suedlesesaal',
-        path: 'assets/backgrounds/suedlesesaal.png',
-        width: 1280,
-        height: 720
-    },
-    'treppenhaus': {
-        key: 'treppenhaus',
-        path: 'assets/backgrounds/treppenhaus.png',
-        width: 1280,
-        height: 720
-    },
-    'flur': {
-        key: 'flur',
-        path: 'assets/backgrounds/flur.png',
-        width: 1280,
-        height: 720
-    },
-    'erdgeschoss': {
-        key: 'erdgeschoss',
-        path: 'assets/backgrounds/erdgeschoss.png',
-        width: 1280,
-        height: 720
-    },
-    'referat': {
-        key: 'referat',
-        path: 'assets/backgrounds/referat.png',
-        width: 1280,
-        height: 720
-    },
-    'cafeteria': {
-        key: 'cafeteria',
-        path: 'assets/backgrounds/cafeteria.png',
-        width: 1280,
-        height: 720
-    },
-    'carrel': {
-        key: 'carrel',
-        path: 'assets/backgrounds/carrel.png',
-        width: 1280,
-        height: 720
-    }
+    'bib_aussen': { key: 'bib_aussen' },
+    'suedlesesaal': { key: 'suedlesesaal' },
+    'treppenhaus': { key: 'treppenhaus' },
+    'flur': { key: 'flur' },
+    'erdgeschoss': { key: 'erdgeschoss' },
+    'referat': { key: 'referat' },
+    'cafeteria': { key: 'cafeteria' },
+    'carrel': { key: 'carrel' }
 };
 
 export class BackgroundManager {
@@ -57,9 +17,38 @@ export class BackgroundManager {
     }
 
     preload() {
-        Object.values(this.backgrounds).forEach(bg => {
-            this.scene.load.image(bg.key, bg.path);
-        });
+    }
+
+    createPlaceholderBackground(key) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1280;
+        canvas.height = 720;
+        const ctx = canvas.getContext('2d');
+        
+        const colors = {
+            'bib_aussen': '#1a2a1a',
+            'suedlesesaal': '#1a1a1a',
+            'treppenhaus': '#0d1a0d',
+            'flur': '#151515',
+            'erdgeschoss': '#1a1515',
+            'referat': '#15101a',
+            'cafeteria': '#1a1a0d',
+            'carrel': '#0d0d0d'
+        };
+        
+        ctx.fillStyle = colors[key] || '#000000';
+        ctx.fillRect(0, 0, 1280, 720);
+        
+        ctx.strokeStyle = '#002200';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 1280; i += 64) {
+            ctx.beginPath();
+            ctx.moveTo(i, 0);
+            ctx.lineTo(i, 720);
+            ctx.stroke();
+        }
+        
+        this.scene.textures.addCanvas(key, canvas);
     }
 
     setBackground(backgroundKey) {
@@ -67,10 +56,11 @@ export class BackgroundManager {
             this.currentBackground.destroy();
         }
 
-        const bgConfig = this.backgrounds[backgroundKey];
-        if (bgConfig) {
-            this.currentBackground = this.scene.add.image(640, 360, bgConfig.key);
-            this.currentBackground.setDepth(-1);
+        if (!this.scene.textures.exists(backgroundKey)) {
+            this.createPlaceholderBackground(backgroundKey);
         }
+
+        this.currentBackground = this.scene.add.image(640, 360, backgroundKey);
+        this.currentBackground.setDepth(-1);
     }
 }

@@ -1,76 +1,38 @@
-export const SPRITE_CONFIG = {
-    'koffein_zombie': {
-        key: 'koffein_zombie',
-        path: 'assets/sprites/koffein_zombie.png',
-        frames: { idle: 2, walk: 4, attack: 6 },
-        width: 64,
-        height: 128
-    },
-    'sortier_o_mat': {
-        key: 'sortier_o_mat',
-        path: 'assets/sprites/sortier_o_mat.png',
-        frames: { idle: 1, moving: 4 },
-        width: 80,
-        height: 100
-    },
-    'eduroam_phantom': {
-        key: 'eduroam_phantom',
-        path: 'assets/sprites/eduroam_phantom.png',
-        frames: { idle: 4, glitch: 8 },
-        width: 64,
-        height: 64
-    },
-    'bibliothekarin': {
-        key: 'bibliothekarin',
-        path: 'assets/sprites/bibliothekarin.png',
-        frames: { idle: 2, walk: 6, attack: 4 },
-        width: 48,
-        height: 128
-    }
-};
-
 export class SpriteManager {
     constructor(scene) {
         this.scene = scene;
         this.sprites = {};
-        this.config = SPRITE_CONFIG;
     }
 
     preload() {
-        Object.values(this.config).forEach(sprite => {
-            this.scene.load.spritesheet(
-                sprite.key,
-                sprite.path,
-                { frameWidth: sprite.width, frameHeight: sprite.height }
-            );
-        });
     }
 
-    create(key, x, y) {
-        const config = this.config[key];
-        if (!config) return null;
-
-        const sprite = this.scene.physics.add.sprite(x, y, config.key);
-        sprite.setCollideWorldBounds(true);
+    createPlaceholderSprite(key, x, y, color = 0x00ff00, width = 64, height = 128) {
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        
+        ctx.fillStyle = '#' + color.toString(16).padStart(6, '0');
+        ctx.fillRect(width * 0.2, height * 0.1, width * 0.6, height * 0.3);
+        
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(width * 0.3, height * 0.2, width * 0.15, height * 0.1);
+        ctx.fillRect(width * 0.55, height * 0.2, width * 0.15, height * 0.1);
+        
+        ctx.fillRect(width * 0.25, height * 0.5, width * 0.5, height * 0.4);
+        
+        this.scene.textures.addCanvas(key, canvas);
+        
+        const sprite = this.scene.add.sprite(x, y, key);
         this.sprites[key] = sprite;
         return sprite;
     }
 
+    create(key, x, y) {
+        return this.createPlaceholderSprite(key, x, y);
+    }
+
     playAnimation(key, animName, loop = true) {
-        const sprite = this.sprites[key];
-        const config = this.config[key];
-        
-        if (sprite && config.frames[animName]) {
-            const anim = this.scene.anims.create({
-                key: `${key}_${animName}`,
-                frames: this.scene.anims.generateFrameNumbers(key, {
-                    start: 0,
-                    end: config.frames[animName] - 1
-                }),
-                frameRate: 10,
-                repeat: loop ? -1 : 0
-            });
-            sprite.play(anim);
-        }
     }
 }
