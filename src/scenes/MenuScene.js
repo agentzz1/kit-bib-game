@@ -128,6 +128,7 @@ export class MenuScene extends Phaser.Scene {
                 fontSize: '28px', fill: '#00ff00', fontFamily: 'Courier New'
             }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
+            menuItem.setData('text', option.text);
             menuItem.setData('action', option.action);
             menuItem.setData('index', index);
 
