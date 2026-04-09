@@ -397,34 +397,15 @@ export class MenuScene extends Phaser.Scene {
     }
 
     playSelectSound() {
-        if (this.sound.get('select')) {
-            this.sound.play('select');
-        } else {
-            this.sound.play('sounds/select.wav').setVolume(0.3);
-        }
     }
 
     playStartSound() {
-        if (this.sound.get('start')) {
-            this.sound.play('start');
-        }
     }
 
     createSound() {
-        if (this.sound.get('music')) {
-            this.music = this.sound.play('music', { loop: true, volume: 0.3 });
-        } else {
-            this.music = this.sound.play('sounds/music.wav', { loop: true, volume: 0.2 });
-        }
-
         this.add.text(1180, 50, '[M]', {
             fontSize: '20px', fill: '#444444', fontFamily: 'Courier New'
         }).setOrigin(0.5).setInteractive({ useHandCursor: true }).on('pointerdown', () => {
-            if (this.music && this.music.isPlaying) {
-                this.music.stop();
-            } else {
-                this.music = this.sound.play('sounds/music.wav', { loop: true, volume: 0.2 });
-            }
         });
     }
 
