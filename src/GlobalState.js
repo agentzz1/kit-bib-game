@@ -6,6 +6,13 @@ class GameState extends EventTarget {
         this._currentTime = 0;
         this._currentNight = 1;
         this._isEduroamDown = false;
+        this._secretsFound = [];
+    }
+
+    get secretsFound() { return this._secretsFound; }
+    set secretsFound(value) {
+        this._secretsFound = value;
+        this.dispatchEvent(new CustomEvent('secretsChanged', { detail: this._secretsFound }));
     }
 
     get coffeeLevel() { return this._coffeeLevel; }

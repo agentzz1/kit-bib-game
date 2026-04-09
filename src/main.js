@@ -4,7 +4,7 @@ import { OfficeScene } from './scenes/OfficeScene.js';
 import { UIScene } from './scenes/UIScene.js';
 import { CameraScene } from './scenes/CameraScene.js';
 import { GameOverScene } from './scenes/GameOverScene.js';
-import { VictoryScene } from './scenes/VictoryScene.js';
+import { VictoryScene, PostCreditsScene } from './scenes/VictoryScene.js';
 
 const config = {
     type: Phaser.AUTO,
@@ -19,7 +19,7 @@ const config = {
             debug: false
         }
     },
-    scene: [BootScene, MenuScene, OfficeScene, UIScene, CameraScene, GameOverScene, VictoryScene]
+    scene: [BootScene, MenuScene, OfficeScene, UIScene, CameraScene, GameOverScene, VictoryScene, PostCreditsScene]
 };
 
 const game = new Phaser.Game(config);
