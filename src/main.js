@@ -4,6 +4,7 @@ import { OfficeScene } from './scenes/OfficeScene.js';
 import { CameraScene } from './scenes/CameraScene.js';
 import { GameOverScene } from './scenes/GameOverScene.js';
 import { VictoryScene } from './scenes/VictoryScene.js';
+import { VHSPostFX } from './shaders/VHSPostFX.js';
 
 const config = {
     type: Phaser.AUTO,
@@ -15,3 +16,7 @@ const config = {
 };
 
 const game = new Phaser.Game(config);
+
+// Add VHS post-processing pipeline
+const vhsPipeline = game.renderer.pipelines.addPostPipeline(VHSPostFX, new VHSPostFX(game));
+game.cameras.main.setPostPipeline(vhsPipeline);
